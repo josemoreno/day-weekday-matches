@@ -100,7 +100,6 @@ def get_repetitions(day, weekday, month_mapping, day_offsets):
                         continue
 
                     first_month[idx] = month
-                    # print(month)
                     break
 
                 # Add offset
@@ -114,14 +113,14 @@ def get_repetitions(day, weekday, month_mapping, day_offsets):
 
     first_appearence["Regular Year"] = get_first_appearence()
     first_appearence["Leap Year"] = get_first_appearence(True)
-    print(f"------Number of times the combination {calendar.day_name[weekday]}-{day} occurs if...------")
+    print(f"------Number of times the combination {calendar.day_name[weekday]}-{day} occurs...------")
     combinations = {"Regular Year": {}, "Leap Year": {}}
     for year, first_month in first_appearence.items():
         for wday, month in first_month.items():
             reps = [month] + month_mapping[year].get(month, [])
             reps = [calendar.month_name[i] for i in reps]
             combinations[year][
-                f"... Jan 1st falls on {calendar.day_name[wday]}"
+                f"when Jan 1st falls on {calendar.day_name[wday]}"
             ] = f"{len(reps)} time/s. In {', '.join(reps)}"
 
     print(json.dumps(combinations, indent=4))
@@ -142,13 +141,13 @@ def main():
 
     check = True
     while check:
-        day = input("Which day do you want to check?: ")
+        day = input("What day do you want to check?: ")
         while not day.isnumeric() or int(day) not in range(1, 32):
             day = input("Sorry, days in a month go from 1 to 31. Please try again: ")
 
         day = int(day)
 
-        weekday = input("Which weekday should the day fall on in different months? ").lower()
+        weekday = input("What weekday should the day fall on in different months? ").lower()
         while weekday not in list(map(str.lower, list(calendar.day_name))):
             weekday = input(
                 f"Sorry, weekday shall one of the following: {list(calendar.day_name)}. Please try again: "
